@@ -6,6 +6,9 @@
 	set LOCATOR_HOST=ec2-34-232-109-123.compute-1.amazonaws.com
 	set SSL-KEYSTORE-PASSWORD=<PASSWORD>
 
+Example command
+
+	TwoWaySSL.exe
 
 # Server Installation
 
