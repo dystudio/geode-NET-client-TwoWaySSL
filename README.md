@@ -274,9 +274,9 @@ export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=pkcs12 -Djavax.net.ssl.trustStore
 	 ssl-require-authentication=true
 	 ssl-keystore-type=pkcs12
 	 ssl-keystore=/runtime/gem_cluster_1/server.p12
-	 ssl-keystore-password=humana123
+	 ssl-keystore-password=<password>
 	 ssl-truststore=/runtime/gem_cluster_1/certificatetruststore
-	 ssl-truststore-password=humana123
+	 ssl-truststore-password=<password>
 
 
 ## Start Cluster
@@ -337,13 +337,13 @@ keytool -import -alias root -keystore certificatetruststore -file ca.cert.pem
 
 ## Generate Certificates
 
-	keytool -genkeypair -dname "cn=ec2-34-232-109-123.compute-1.amazonaws.com, ou=GemFire, o=humana, c=US" -storetype PKCS12 -keyalg RSA -keysize 2048 -alias gemfire1 -keystore gemfire1.keystore -storepass humana123 -validity 180
+	keytool -genkeypair -dname "cn=ec2-34-232-109-123.compute-1.amazonaws.com, ou=GemFire, o=humana, c=US" -storetype PKCS12 -keyalg RSA -keysize 2048 -alias gemfire1 -keystore gemfire1.keystore -storepass <password> -validity 180
 
-	keytool -exportcert -storetype PKCS12 -keyalg RSA -keysize 2048 -alias gemfire1 -keystore gemfire1.keystore -storepass humana123 -rfc -file gemfire1.cer
+	keytool -exportcert -storetype PKCS12 -keyalg RSA -keysize 2048 -alias gemfire1 -keystore gemfire1.keystore -storepass  -rfc -file gemfire1.cer
 
 	keytool -importcert -alias gemfire1 -file gemfire1.cer -keystore certificatetruststore
 
-	keytool -exportcert -alias gemfire1 -keystore gemfire1.keystore -rfc  -storetype pkcs12 -file gemfire1.pem -storepass humana123
+	keytool -exportcert -alias gemfire1 -keystore gemfire1.keystore -rfc  -storetype pkcs12 -file gemfire1.pem -storepass <password>
 
 
 ------------
@@ -368,9 +368,9 @@ keytool -import -alias root -keystore certificatetruststore -file ca.cert.pem
 	ssl-require-authentication=true
 	ssl-keystore-type=pkcs12
 	ssl-keystore=/runtime/gem_cluster_1/gemfire1.keystore
-	ssl-keystore-password=humana123
+	ssl-keystore-password=<password>
 	ssl-truststore=/runtime/gem_cluster_1/certificatetruststore
-	ssl-truststore-password=humana123
+	ssl-truststore-password=<password>
 
 
 	start locator --dir=/runtime/gem_cluster_1/gem1101-locator --port=10000 --name=gem1101-locator --J=-Djava.rmi.server.hostname=ec2-34-232-109-123.compute-1.amazonaws.com --J="-Dgemfire.log-file-size-limit=10" --J="-Dgemfire.archive-disk-space-limit=100" --J="-Dgemfire.jmx-manager-start=true" --J="-Dgemfire.locators=ec2-34-232-109-123.compute-1.amazonaws.com[10000]" --J="-Dgemfire.jmx-manager-hostname-for-clients=ec2-34-232-109-123.compute-1.amazonaws.com" --J="-Dgemfire.distributed-system-id=1" --J="-Dgemfire.jmx-manager=true" --J="-Dgemfire.enable-network-partition-detection=true" --J="-Dgemfire.archive-file-size-limit=10" --J="-Dgemfire.jmx-manager-port=11099" --J="-Dgemfire.log-disk-space-limit=100" --J="-Dgemfire.statistic-sampling-enabled=true" --J="-Dgemfire.statistic-archive-file=locator.gfs" --J="-Dtype=locator" --J="-Dgemfire.http-service-port=17070" --J="-Dgemfire.log-level=config" --J=-Xmx2g --J=-Xms2g --J=-XX:+UseConcMarkSweepGC --J=-XX:+UseParNewGC --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties --J="-Djavax.net.ssl.trustStoreType=pkcs12" --J="-Djavax.net.ssl.keyStoreType=pkcs12"
