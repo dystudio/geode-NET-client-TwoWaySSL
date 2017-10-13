@@ -1,4 +1,13 @@
-# Installation
+# Client Installation
+
+	set PATH=C:\devtools\SSL\OpenSSL;%PATH%
+	set LD_LIBRARY_PATH=C:\devtools\repositories\IMDG\pivotal-gemfire-native\lib  
+
+	set LOCATOR_HOST=ec2-34-232-109-123.compute-1.amazonaws.com
+	set SSL-KEYSTORE-PASSWORD=<PASSWORD>
+
+
+# Server Installation
 
 ## Login
 
