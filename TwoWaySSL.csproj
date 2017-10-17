@@ -78,6 +78,7 @@
     <None Include="app.config" />
     <None Include="cert\gemfire1.cer" />
     <None Include="cert\gemfire1.keystore" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="cert" />

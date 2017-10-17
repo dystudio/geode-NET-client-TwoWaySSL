@@ -1,3 +1,36 @@
+
+# Setup GemFire Cluster
+
+## Login
+
+ssh -i /Projects/Pivotal/AWS/operation/security/humana/data2-humana.pem  ec2-user@ec2-34-232-109-123.compute-1.amazonaws.com
+
+## Set Environment Variables
+
+
+export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.trustStoreType=jks $JAVA_ARGS"
+
+	export PATH=/runtime/java/bin:$PATH
+	export JAVA_HOME=/runtime/java
+	export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.trustStoreType=jks $JAVA_ARGS"
+	export GEMFIRE=/runtime/gemfire
+
+
+## Start Cluster
+
+	start locator --dir=/runtime/gem_cluster_1/gem1101-locator --port=10000 --name=gem1101-locator --J=-Djava.rmi.server.hostname=ec2-34-232-109-123.compute-1.amazonaws.com --J="-Dgemfire.log-file-size-limit=10" --J="-Dgemfire.archive-disk-space-limit=100" --J="-Dgemfire.jmx-manager-start=true" --J="-Dgemfire.locators=ec2-34-232-109-123.compute-1.amazonaws.com[10000]" --J="-Dgemfire.jmx-manager-hostname-for-clients=ec2-34-232-109-123.compute-1.amazonaws.com" --J="-Dgemfire.distributed-system-id=1" --J="-Dgemfire.jmx-manager=true" --J="-Dgemfire.enable-network-partition-detection=true" --J="-Dgemfire.archive-file-size-limit=10" --J="-Dgemfire.jmx-manager-port=11099" --J="-Dgemfire.log-disk-space-limit=100" --J="-Dgemfire.statistic-sampling-enabled=true" --J="-Dgemfire.statistic-archive-file=locator.gfs" --J="-Dtype=locator" --J="-Dgemfire.http-service-port=17070" --J="-Dgemfire.log-level=config" --J=-Xmx2g --J=-Xms2g --J=-XX:+UseConcMarkSweepGC --J=-XX:+UseParNewGC --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties --J="-Djavax.net.ssl.trustStoreType=jks" --J="-Djavax.net.ssl.keyStoreType=jks"
+
+	start server --dir=/runtime/gem_cluster_1/gem1101-server --name=gem1101-server --server-port=10100 --J="-Dgemfire.log-disk-space-limit=100" --J="-Dtype=datanode" --J="-Dgemfire.statistic-sampling-enabled=true" --J="-Dgemfire.conserve-sockets=False" --J="-Dgemfire.ALLOW_PERSISTENT_TRANSACTIONS=true" --J="-Dgemfire.locators=ec2-34-232-109-123.compute-1.amazonaws.com[10000]" --J="-Dgemfire.membership-port-range=10901-10999" --J="-Dgemfire.log-file-size-limit=10" --J="-Dgemfire.tcp-port=10001" --J="-Dgemfire.archive-disk-space-limit=100" --J="-Dgemfire.archive-file-size-limit=10" --J="-Dgemfire.enable-network-partition-detection=true" --J="-Dgemfire.log-level=config" --J="-Dgemfire.distributed-system-id=1" --J="-Dgemfire.statistic-archive-file=datanode.gfs" --J=-Xmx12500m --J=-Xms12500m --J=-Xmn1588m --J=-XX:+UseConcMarkSweepGC --J=-XX:+UseParNewGC --J=-XX:CMSInitiatingOccupancyFraction=85 --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties --J="-Djavax.net.ssl.trustStoreType=jks" --J="-Djavax.net.ssl.keyStoreType=jks" --J="-Dgemfire.tcp-port=0"
+
+
+## Connect Gfsh
+
+	connect --locator=localhost[10000] --use-ssl --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties
+
+	query --query="select * from /Test.keySet()"
+
+	remove --region=/Test --key=example
+
 # Client Installation
 
 	set PATH=C:\devtools\SSL\OpenSSL;%PATH%
@@ -10,23 +43,6 @@ Example command
 
 	TwoWaySSL.exe
 
-# Server Installation
-
-## Login
-
-ssh -i /Projects/Pivotal/AWS/operation/security/humana/data2-humana.pem  ec2-user@ec2-34-232-109-123.compute-1.amazonaws.com
-
-
-## Set Environment Variables
-
-
-
-export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=pkcs12 -Djavax.net.ssl.trustStoreType=pkcs12 $JAVA_ARGS"
-
-	export PATH=/runtime/java/bin:$PATH
-	export JAVA_HOME=/runtime/java
-	export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=pkcs12 -Djavax.net.ssl.trustStoreType=pkcs12 $JAVA_ARGS"
-	export GEMFIRE=/runtime/gemfire
 
 ———————————————————
 ## root pair
@@ -284,20 +300,11 @@ export JAVA_ARGS="-Djavax.net.ssl.keyStoreType=pkcs12 -Djavax.net.ssl.trustStore
 
 	 ssl-enabled-components=all
 	 ssl-require-authentication=true
-	 ssl-keystore-type=pkcs12
+	 ssl-keystore-type=jks
 	 ssl-keystore=/runtime/gem_cluster_1/server.p12
 	 ssl-keystore-password=<password>
 	 ssl-truststore=/runtime/gem_cluster_1/certificatetruststore
 	 ssl-truststore-password=<password>
-
-
-## Start Cluster
-
-
-	start locator --dir=/runtime/gem_cluster_1/gem1101-locator --port=10000 --name=gem1101-locator --J=-Djava.rmi.server.hostname=ec2-34-232-109-123.compute-1.amazonaws.com --J="-Dgemfire.log-file-size-limit=10" --J="-Dgemfire.archive-disk-space-limit=100" --J="-Dgemfire.jmx-manager-start=true" --J="-Dgemfire.locators=ec2-34-232-109-123.compute-1.amazonaws.com[10000]" --J="-Dgemfire.jmx-manager-hostname-for-clients=ec2-34-232-109-123.compute-1.amazonaws.com" --J="-Dgemfire.distributed-system-id=1" --J="-Dgemfire.jmx-manager=true" --J="-Dgemfire.enable-network-partition-detection=true" --J="-Dgemfire.archive-file-size-limit=10" --J="-Dgemfire.jmx-manager-port=11099" --J="-Dgemfire.log-disk-space-limit=100" --J="-Dgemfire.statistic-sampling-enabled=true" --J="-Dgemfire.statistic-archive-file=locator.gfs" --J="-Dtype=locator" --J="-Dgemfire.http-service-port=17070" --J="-Dgemfire.log-level=config" --J=-Xmx2g --J=-Xms2g --J=-XX:+UseConcMarkSweepGC --J=-XX:+UseParNewGC --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties --J="-Djavax.net.ssl.trustStoreType=pkcs12" --J="-Djavax.net.ssl.keyStoreType=pkcs12"
-
-
-	start server --dir=/runtime/gem_cluster_1/gem1101-server --name=gem1101-server --server-port=10100 --J="-Dgemfire.log-disk-space-limit=100" --J="-Dtype=datanode" --J="-Dgemfire.statistic-sampling-enabled=true" --J="-Dgemfire.conserve-sockets=False" --J="-Dgemfire.ALLOW_PERSISTENT_TRANSACTIONS=true" --J="-Dgemfire.locators=ec2-34-232-109-123.compute-1.amazonaws.com[10000]" --J="-Dgemfire.membership-port-range=10901-10999" --J="-Dgemfire.log-file-size-limit=10" --J="-Dgemfire.tcp-port=10001" --J="-Dgemfire.archive-disk-space-limit=100" --J="-Dgemfire.archive-file-size-limit=10" --J="-Dgemfire.enable-network-partition-detection=true" --J="-Dgemfire.log-level=config" --J="-Dgemfire.distributed-system-id=1" --J="-Dgemfire.statistic-archive-file=datanode.gfs" --J=-Xmx12500m --J=-Xms12500m --J=-Xmn1588m --J=-XX:+UseConcMarkSweepGC --J=-XX:+UseParNewGC --J=-XX:CMSInitiatingOccupancyFraction=85 --security-properties-file=/runtime/gem_cluster_1/gfsecurity.properties --J="-Djavax.net.ssl.trustStoreType=pkcs12" --J="-Djavax.net.ssl.keyStoreType=pkcs12"
 
 
 ## ------------------------------------------------
