@@ -311,43 +311,43 @@ Example command
 ## ------------------------------------------------
 # Legacy Instructions
 
-———————————————————
+	———————————————————
 
-Generate client cert
+	Generate client cert
 
-openssl genrsa -aes256       -out private/client-key.pem 2048
+	openssl genrsa -aes256       -out private/client-key.pem 2048
 
-chmod 400 private/client-key.pem
+	chmod 400 private/client-key.pem
 
-openssl req -config openssl.cnf       -key private/client-key.pem       -new -sha256 -out csr/client-csr.pem
+	openssl req -config openssl.cnf       -key private/client-key.pem       -new -sha256 -out csr/client-csr.pem
 
-openssl ca -config openssl.cnf \
-      -extensions server_cert -days 375 -notext -md sha256 \
-      -in csr/client-csr.pem \
-      -out certs/client-cert.pem
+	openssl ca -config openssl.cnf \
+	  -extensions server_cert -days 375 -notext -md sha256 \
+	  -in csr/client-csr.pem \
+	  -out certs/client-cert.pem
 
-chmod 444 certs/client-cert.pem
+	chmod 444 certs/client-cert.pem
 
-openssl x509 -noout -text \
-      -in certs/client-cert.pem
+	openssl x509 -noout -text \
+	  -in certs/client-cert.pem
 
-———————————————————
+	———————————————————
 
-Generate pkcs12 file for server
-openssl pkcs12 -export -in server-cert.pem -inkey server-key.pem -out server.p12 -name server  -CAfile ca.cert.pem -caname root
+	Generate pkcs12 file for server
+	openssl pkcs12 -export -in server-cert.pem -inkey server-key.pem -out server.p12 -name server  -CAfile ca.cert.pem -caname root
 
-Validate key store
-keytool -list -v -keystore server.p12
+	Validate key store
+	keytool -list -v -keystore server.p12
 
-———————————————————
+	———————————————————
 
-Generate pkcs12 file for client
-openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -out client.p12 -name client  -CAfile ca.cert.pem -caname root
+	Generate pkcs12 file for client
+	openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -out client.p12 -name client  -CAfile ca.cert.pem -caname root
 
-———————————————————
+	———————————————————
 
-Generate certificate trust store
-keytool -import -alias root -keystore certificatetruststore -file ca.cert.pem
+	Generate certificate trust store
+	keytool -import -alias root -keystore certificatetruststore -file ca.cert.pem
 
 
 
