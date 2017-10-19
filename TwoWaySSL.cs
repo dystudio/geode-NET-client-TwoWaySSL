@@ -66,8 +66,8 @@ namespace Humana
 			cacheProps.Insert("log-level", "error");
 			cacheProps.Insert("ssl-enabled", "true");
 			
-			cacheProps.Insert("ssl-truststore",  @"Z:\Projects\LifeSciences\Humana\dev\DigitalIT\NET\TwoWaySSL\cert\ca.cert.pem");
-			cacheProps.Insert("ssl-keystore",  @"Z:\Projects\LifeSciences\Humana\dev\DigitalIT\NET\TwoWaySSL\cert\client.pem");
+			cacheProps.Insert("ssl-truststore",  @"Z:\Projects\LifeSciences\Humana\dev\DigitalIT\NET\geode-NET-client-TwoWaySSL\cert\ca.cert.pem");
+			cacheProps.Insert("ssl-keystore",  @"Z:\Projects\LifeSciences\Humana\dev\DigitalIT\NET\geode-NET-client-TwoWaySSL\cert\client.pem");
 			cacheProps.Insert("ssl-keystore-password", "secretpassword");
 			
 			if(!File.Exists(cacheProps.Find("ssl-keystore")))

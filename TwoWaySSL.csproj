@@ -42,20 +42,11 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cryptoImpl">
-      <HintPath>C:\devtools\repositories\IMDG\pivotal-gemfire-native\bin\cryptoImpl.dll</HintPath>
-    </Reference>
-    <Reference Include="libeay32">
-      <HintPath>C:\devtools\SSL\OpenSSL\libeay32.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Pivotal.Gemfire">
       <HintPath>C:\devtools\repositories\IMDG\pivotal-gemfire-native\bin\Pivotal.Gemfire.dll</HintPath>
-    </Reference>
-    <Reference Include="ssleay32">
-      <HintPath>C:\devtools\SSL\OpenSSL\ssleay32.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -76,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="cert\ca.cert.pem" />
+    <None Include="cert\client.pem" />
     <None Include="cert\gemfire1.cer" />
     <None Include="cert\gemfire1.keystore" />
     <None Include="README.md" />

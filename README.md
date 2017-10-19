@@ -45,7 +45,8 @@ Example command
 
 
 ———————————————————
-## root pair
+# Server Certificate Generation Notes
+## root pair instructions
 
 	 mkdir /root/ca
 
@@ -331,6 +332,7 @@ openssl x509 -noout -text \
       -in certs/client-cert.pem
 
 ———————————————————
+
 Generate pkcs12 file for server
 openssl pkcs12 -export -in server-cert.pem -inkey server-key.pem -out server.p12 -name server  -CAfile ca.cert.pem -caname root
 
@@ -338,10 +340,12 @@ Validate key store
 keytool -list -v -keystore server.p12
 
 ———————————————————
+
 Generate pkcs12 file for client
 openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -out client.p12 -name client  -CAfile ca.cert.pem -caname root
 
 ———————————————————
+
 Generate certificate trust store
 keytool -import -alias root -keystore certificatetruststore -file ca.cert.pem
 
